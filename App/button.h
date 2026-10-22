@@ -1,5 +1,5 @@
 /* The user button B1 (PC13, active low, EXTI) toggles LD2 (PA5). The
- * interrupt only records the press; the main loop acts on it. */
+ * interrupt debounces and records the press; the main loop acts on it. */
 #ifndef BUTTON_H
 #define BUTTON_H
 
