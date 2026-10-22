@@ -1,0 +1,25 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  firmware:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install the Arm GNU toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi
+      - name: Build
+        run: make -j
+      - name: Size
+        run: arm-none-eabi-size build/f401-sensor-node.elf
+      - uses: actions/upload-artifact@v4
+        with:
+          name: f401-sensor-node
+          path: |
+            build/f401-sensor-node.elf
+            build/f401-sensor-node.bin
