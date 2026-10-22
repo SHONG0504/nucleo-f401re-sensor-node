@@ -27,7 +27,18 @@ static void cmd_help(void)
   printf("commands:\r\n");
   printf("  help         this text\r\n");
   printf("  status       uptime, last sample, LED\r\n");
+  printf("  stats        min/max/average of the last %u samples\r\n", (unsigned)SAMPLER_HISTORY);
   printf("  led on|off   drive LD2\r\n");
+}
+
+static void cmd_stats(void)
+{
+  sampler_stats_t st;
+  if (!sampler_stats(&st)) {
+    printf("stats: no samples yet\r\n");
+    return;
+  }
+  printf("stats: %u samples, min %u mV, max %u mV, avg %u mV\r\n", st.count, st.min_mv, st.max_mv, st.avg_mv);
 }
 
 static void cmd_status(void)
@@ -71,6 +82,8 @@ static void dispatch(char *line)
     cmd_help();
   } else if (strcmp(line, "status") == 0) {
     cmd_status();
+  } else if (strcmp(line, "stats") == 0) {
+    cmd_stats();
   } else if (strcmp(line, "led") == 0) {
     cmd_led(arg);
   } else {

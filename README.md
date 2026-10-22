@@ -14,11 +14,13 @@ modules under `App/`.
   with CR or LF. Commands:
   - `help`
   - `status` – uptime, sample count, last reading, LED state
+  - `stats` – min, max and average of the last 32 readings
   - `led on|off`
 - **Sampler**: ADC1 channel 0 (PA0, Arduino `A0`) every 1000 ms, printed as
   millivolts against a 3.3 V reference: `[12 s] sample: 1650 mV`.
 - **Button**: B1 (PC13) toggles LD2 (PA5) and prints `button: press N, LED on|off`.
-  The interrupt only records the press; the main loop acts on it.
+  The interrupt debounces the contacts (50 ms) and records the press; the
+  main loop acts on it.
 - **Watchdog**: IWDG, LSI/64 with a reload of 2000 (about 4 s). The main loop
   refreshes it every pass. The boot banner says why the board reset
   (`power-on or reset pin`, `software`, `watchdog`).
