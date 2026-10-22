@@ -3,6 +3,7 @@
 #ifndef SAMPLER_H
 #define SAMPLER_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #include "stm32f4xx_hal.h"
